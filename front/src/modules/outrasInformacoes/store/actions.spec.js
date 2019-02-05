@@ -1,279 +1,12 @@
 import axios from 'axios';
-import * as projetoHelperAPI from '@/helpers/api/Projeto';
+import * as outrasInformacoesHelperAPI from '@/helpers/api/OutrasInformacoes';
 import * as actions from './actions';
 
 jest.mock('axios');
 
-describe('Projeto actions', () => {
+describe('Outras Informacoes actions', () => {
     let commit;
     let mockReponse;
-
-    describe('buscaProjeto', () => {
-        beforeEach(() => {
-            mockReponse = {
-                data: {
-                    data: {
-                        projeto: {
-                            IdPRONAC: '132451',
-                            Item: 'Hospedagem sem Alimenta\xE7\xE3o',
-                            NomeProjeto: 'Crian\xE7a Para Vida - 15 anos',
-                        },
-                    },
-                },
-            };
-
-            axios.get.mockResolvedValue(mockReponse);
-
-            commit = jest.fn();
-            jest.spyOn(projetoHelperAPI, 'buscaProjeto');
-            actions.buscaProjeto({ commit });
-        });
-
-        test('it calls projetoHelperAPI.buscaProjeto', () => {
-            expect(projetoHelperAPI.buscaProjeto).toHaveBeenCalled();
-        });
-
-        test('it is commit to buscaProjeto', (done) => {
-            const projeto = mockReponse.data;
-            done();
-            expect(commit).toHaveBeenCalledWith('SET_PROJETO', projeto.data);
-        });
-    });
-
-    describe('buscaProponente', () => {
-        beforeEach(() => {
-            mockReponse = {
-                data: {
-                    data: {
-                        proponente: {
-                            Proponente: 'Associa\xE7\xC3o Beneficiente Cultural Religiosa Centro Judaico do Brooklin',
-                            idAgente: '24806',
-                            TipoPessoa: 'Jur\xCDdica',
-                        },
-                    },
-                },
-            };
-
-            axios.get.mockResolvedValue(mockReponse);
-
-            commit = jest.fn();
-            jest.spyOn(projetoHelperAPI, 'buscaProponente');
-            actions.buscaProponente({ commit });
-        });
-
-        test('it calls projetoHelperAPI.buscaProponente', () => {
-            expect(projetoHelperAPI.buscaProponente).toHaveBeenCalled();
-        });
-
-        test('it is commit to buscaProponente', (done) => {
-            const proponente = mockReponse.data;
-            done();
-            expect(commit).toHaveBeenCalledWith('SET_PROPONENTE', proponente.data);
-        });
-    });
-
-    describe('buscaPlanilhaHomologada', () => {
-        beforeEach(() => {
-            mockReponse = {
-                data: {
-                    data: {
-                        planilhaHomologada: {
-                            tpPlanilha: 'CO',
-                            IdPronac: '189786',
-                            PRONAC: '150151',
-                        },
-                    },
-                },
-            };
-
-            axios.get.mockResolvedValue(mockReponse);
-
-            commit = jest.fn();
-            jest.spyOn(projetoHelperAPI, 'buscaPlanilhaHomologada');
-            const idPronac = 123456;
-            actions.buscaPlanilhaHomologada({ commit }, idPronac);
-        });
-
-        test('it calls projetoHelperAPI.buscaPlanilhaHomologada', () => {
-            expect(projetoHelperAPI.buscaPlanilhaHomologada).toHaveBeenCalled();
-        });
-
-        test('it is commit to buscaPlanilhaHomologada', (done) => {
-            const planilhaHomologada = mockReponse.data;
-            done();
-            expect(commit).toHaveBeenCalledWith('SET_PLANILHA_HOMOLOGADA', planilhaHomologada.data);
-        });
-    });
-
-    describe('buscaPlanilhaOriginal', () => {
-        beforeEach(() => {
-            mockReponse = {
-                data: {
-                    data: {
-                        planilhaOriginal: {
-                            idPlanilhaProposta: '3675289',
-                            FonteRecurso: 'Incentivo Fiscal Federal',
-                            idEtapa: '2',
-                        },
-                    },
-                },
-            };
-
-            axios.get.mockResolvedValue(mockReponse);
-
-            commit = jest.fn();
-            jest.spyOn(projetoHelperAPI, 'buscaPlanilhaOriginal');
-            const idPreProjeto = 273246;
-            actions.buscaPlanilhaOriginal({ commit }, idPreProjeto);
-        });
-
-        test('it calls projetoHelperAPI.buscaPlanilhaOriginal', () => {
-            expect(projetoHelperAPI.buscaPlanilhaOriginal).toHaveBeenCalled();
-        });
-
-        test('it is commit to buscaPlanilhaOriginal', (done) => {
-            const planilhaOriginal = mockReponse.data;
-            done();
-            expect(commit).toHaveBeenCalledWith('SET_PLANILHA_ORIGINAL', planilhaOriginal.data);
-        });
-    });
-
-    describe('buscaPlanilhaReadequada', () => {
-        beforeEach(() => {
-            mockReponse = {
-                data: {
-                    data: {
-                        planilhaReadequada: {
-                            tpPlanilha: 'RP',
-                            IdPronac: '189786',
-                            PRONAC: '150151',
-                        },
-                    },
-                },
-            };
-
-            axios.get.mockResolvedValue(mockReponse);
-
-            commit = jest.fn();
-            jest.spyOn(projetoHelperAPI, 'buscaPlanilhaReadequada');
-            const idPronac = 123456;
-            actions.buscaPlanilhaReadequada({ commit }, idPronac);
-        });
-
-        test('it calls projetoHelperAPI.buscaPlanilhaReadequada', () => {
-            expect(projetoHelperAPI.buscaPlanilhaReadequada).toHaveBeenCalled();
-        });
-
-        test('it is commit to buscaPlanilhaReadequada', (done) => {
-            const planilhaReadequada = mockReponse.data;
-            done();
-            expect(commit).toHaveBeenCalledWith('SET_PLANILHA_READEQUADA', planilhaReadequada.data);
-        });
-    });
-
-    describe('buscaPlanilhaAutorizada', () => {
-        beforeEach(() => {
-            mockReponse = {
-                data: {
-                    data: {
-                        planilhaAutorizada: {
-                            tpPlanilha: 'CO',
-                            idPronac: '200728',
-                            PRONAC: '1510482',
-                        },
-                    },
-                },
-            };
-
-            axios.get.mockResolvedValue(mockReponse);
-
-            commit = jest.fn();
-            jest.spyOn(projetoHelperAPI, 'buscaPlanilhaAutorizada');
-            const idPreProjeto = 273246;
-            actions.buscaPlanilhaAutorizada({ commit }, idPreProjeto);
-        });
-
-        test('it calls projetoHelperAPI.buscaPlanilhaAutorizada', () => {
-            expect(projetoHelperAPI.buscaPlanilhaAutorizada).toHaveBeenCalled();
-        });
-
-        test('it is commit to buscaPlanilhaAutorizada', (done) => {
-            const planilhaAutorizada = mockReponse.data;
-            done();
-            expect(commit).toHaveBeenCalledWith('SET_PLANILHA_AUTORIZADA', planilhaAutorizada.data);
-        });
-    });
-
-    describe('buscaPlanilhaAdequada', () => {
-        beforeEach(() => {
-            mockReponse = {
-                data: {
-                    data: {
-                        planilhaAdequada: {
-                            Seq: '28',
-                            idPlanilhaProposta: '4913779',
-                            idEtapa: '8',
-                        },
-                    },
-                },
-            };
-
-            axios.get.mockResolvedValue(mockReponse);
-
-            commit = jest.fn();
-            jest.spyOn(projetoHelperAPI, 'buscaPlanilhaAdequada');
-            const idPreProjeto = 273246;
-            actions.buscaPlanilhaAdequada({ commit }, idPreProjeto);
-        });
-
-        test('it calls projetoHelperAPI.buscaPlanilhaAdequada', () => {
-            expect(projetoHelperAPI.buscaPlanilhaAdequada).toHaveBeenCalled();
-        });
-
-        test('it is commit to buscaPlanilhaAdequada', (done) => {
-            const planilhaAdequada = mockReponse.data;
-            done();
-            expect(commit).toHaveBeenCalledWith('SET_PLANILHA_ADEQUADA', planilhaAdequada.data);
-        });
-    });
-
-    describe('buscarTransferenciaRecursos', () => {
-        beforeEach(() => {
-            mockReponse = {
-                data: {
-                    data: {
-                        transferenciaRecursos: {
-                            idPronacTransferidor: 1,
-                            PronacTransferidor: 111111,
-                            NomeProjetoTranferidor: 'CrianÃ§a Para Vida - 15 anos',
-                            idPronacRecebedor: 2,
-                            PronacRecebedor: 222222,
-                            NomeProjetoRecedor: 'CrianÃ§a Para Vida - 15 anos',
-                            dtRecebimento: new Date(),
-                            vlRecebido: parseFloat('1000000'),
-                        },
-                    },
-                },
-            };
-
-            axios.get.mockResolvedValue(mockReponse);
-
-            commit = jest.fn();
-            jest.spyOn(projetoHelperAPI, 'buscarTransferenciaRecursos');
-            const acao = 'transferidor';
-            actions.buscarTransferenciaRecursos({ commit }, acao);
-        });
-
-        test('it calls projetoHelperAPI.buscarTransferenciaRecursos', () => {
-            expect(projetoHelperAPI.buscarTransferenciaRecursos).toHaveBeenCalled();
-        });
-
-        test('it is commit to buscarTransferenciaRecursos', (done) => {
-            const transferenciaRecursos = mockReponse.data;
-            done();
-            expect(commit).toHaveBeenCalledWith('SET_TRANSFERENCIA_RECURSOS', transferenciaRecursos.data);
-        });
-    });
 
     describe('buscarCertidoesNegativas', () => {
         beforeEach(() => {
@@ -294,13 +27,13 @@ describe('Projeto actions', () => {
             axios.get.mockResolvedValue(mockReponse);
 
             commit = jest.fn();
-            jest.spyOn(projetoHelperAPI, 'buscarCertidoesNegativas');
+            jest.spyOn(outrasInformacoesHelperAPI, 'buscarCertidoesNegativas');
             const idPronac = 216941;
             actions.buscarCertidoesNegativas({ commit }, idPronac);
         });
 
-        test('it calls projetoHelperAPI.buscarCertidoesNegativas', () => {
-            expect(projetoHelperAPI.buscarCertidoesNegativas).toHaveBeenCalled();
+        test('it calls outrasInformacoesHelperAPI.buscarCertidoesNegativas', () => {
+            expect(outrasInformacoesHelperAPI.buscarCertidoesNegativas).toHaveBeenCalled();
         });
 
         test('it is commit to buscarCertidoesNegativas', (done) => {
@@ -327,13 +60,13 @@ describe('Projeto actions', () => {
             axios.get.mockResolvedValue(mockReponse);
 
             commit = jest.fn();
-            jest.spyOn(projetoHelperAPI, 'buscarDocumentosAssinados');
+            jest.spyOn(outrasInformacoesHelperAPI, 'buscarDocumentosAssinados');
             const idPronac = 216941;
             actions.buscarDocumentosAssinados({ commit }, idPronac);
         });
 
-        test('it calls projetoHelperAPI.buscarDocumentosAssinados', () => {
-            expect(projetoHelperAPI.buscarDocumentosAssinados).toHaveBeenCalled();
+        test('it calls outrasInformacoesHelperAPI.buscarDocumentosAssinados', () => {
+            expect(outrasInformacoesHelperAPI.buscarDocumentosAssinados).toHaveBeenCalled();
         });
 
         test('it is commit to buscarDocumentosAssinados', (done) => {
@@ -364,13 +97,13 @@ describe('Projeto actions', () => {
             axios.get.mockResolvedValue(mockReponse);
 
             commit = jest.fn();
-            jest.spyOn(projetoHelperAPI, 'buscarDadosComplementares');
+            jest.spyOn(outrasInformacoesHelperAPI, 'buscarDadosComplementares');
             const idPronac = 216941;
             actions.buscarDadosComplementares({ commit }, idPronac);
         });
 
-        test('it calls projetoHelperAPI.buscarDadosComplementares', () => {
-            expect(projetoHelperAPI.buscarDadosComplementares).toHaveBeenCalled();
+        test('it calls outrasInformacoesHelperAPI.buscarDadosComplementares', () => {
+            expect(outrasInformacoesHelperAPI.buscarDadosComplementares).toHaveBeenCalled();
         });
 
         test('it is commit to buscarDadosComplementares', (done) => {
@@ -399,13 +132,13 @@ describe('Projeto actions', () => {
             axios.get.mockResolvedValue(mockReponse);
 
             commit = jest.fn();
-            jest.spyOn(projetoHelperAPI, 'buscarDocumentosAnexados');
+            jest.spyOn(outrasInformacoesHelperAPI, 'buscarDocumentosAnexados');
             const idPronac = 216941;
             actions.buscarDocumentosAnexados({ commit }, idPronac);
         });
 
-        test('it calls projetoHelperAPI.buscarDocumentosAnexados', () => {
-            expect(projetoHelperAPI.buscarDocumentosAnexados).toHaveBeenCalled();
+        test('it calls outrasInformacoesHelperAPI.buscarDocumentosAnexados', () => {
+            expect(outrasInformacoesHelperAPI.buscarDocumentosAnexados).toHaveBeenCalled();
         });
 
         test('it is commit to buscarDocumentosAnexados', (done) => {
@@ -438,13 +171,13 @@ describe('Projeto actions', () => {
             axios.get.mockResolvedValue(mockReponse);
 
             commit = jest.fn();
-            jest.spyOn(projetoHelperAPI, 'buscarLocalRealizacaoDeslocamento');
+            jest.spyOn(outrasInformacoesHelperAPI, 'buscarLocalRealizacaoDeslocamento');
             const idPronac = 216941;
             actions.buscarLocalRealizacaoDeslocamento({ commit }, idPronac);
         });
 
-        test('it calls projetoHelperAPI.buscarLocalRealizacaoDeslocamento', () => {
-            expect(projetoHelperAPI.buscarLocalRealizacaoDeslocamento).toHaveBeenCalled();
+        test('it calls outrasInformacoesHelperAPI.buscarLocalRealizacaoDeslocamento', () => {
+            expect(outrasInformacoesHelperAPI.buscarLocalRealizacaoDeslocamento).toHaveBeenCalled();
         });
 
         test('it is commit to buscarLocalRealizacaoDeslocamento', (done) => {
@@ -473,13 +206,13 @@ describe('Projeto actions', () => {
             axios.get.mockResolvedValue(mockReponse);
 
             commit = jest.fn();
-            jest.spyOn(projetoHelperAPI, 'buscarProvidenciaTomada');
+            jest.spyOn(outrasInformacoesHelperAPI, 'buscarProvidenciaTomada');
             const idPronac = 216941;
             actions.buscarProvidenciaTomada({ commit }, idPronac);
         });
 
-        test('it calls projetoHelperAPI.buscarProvidenciaTomada', () => {
-            expect(projetoHelperAPI.buscarProvidenciaTomada).toHaveBeenCalled();
+        test('it calls outrasInformacoesHelperAPI.buscarProvidenciaTomada', () => {
+            expect(outrasInformacoesHelperAPI.buscarProvidenciaTomada).toHaveBeenCalled();
         });
 
         test('it is commit to buscarProvidenciaTomada', (done) => {
@@ -506,13 +239,13 @@ describe('Projeto actions', () => {
             axios.get.mockResolvedValue(mockReponse);
 
             commit = jest.fn();
-            jest.spyOn(projetoHelperAPI, 'buscarPlanoDistribuicaoIn2013');
+            jest.spyOn(outrasInformacoesHelperAPI, 'buscarPlanoDistribuicaoIn2013');
             const idPronac = 194617;
             actions.buscarPlanoDistribuicaoIn2013({ commit }, idPronac);
         });
 
-        test('it calls projetoHelperAPI.buscarPlanoDistribuicaoIn2013', () => {
-            expect(projetoHelperAPI.buscarPlanoDistribuicaoIn2013).toHaveBeenCalled();
+        test('it calls outrasInformacoesHelperAPI.buscarPlanoDistribuicaoIn2013', () => {
+            expect(outrasInformacoesHelperAPI.buscarPlanoDistribuicaoIn2013).toHaveBeenCalled();
         });
 
         test('it is commit to buscarPlanoDistribuicaoIn2013', (done) => {
@@ -541,13 +274,13 @@ describe('Projeto actions', () => {
             axios.get.mockResolvedValue(mockReponse);
 
             commit = jest.fn();
-            jest.spyOn(projetoHelperAPI, 'buscarHistoricoEncaminhamento');
+            jest.spyOn(outrasInformacoesHelperAPI, 'buscarHistoricoEncaminhamento');
             const idPronac = 216941;
             actions.buscarHistoricoEncaminhamento({ commit }, idPronac);
         });
 
-        test('it calls projetoHelperAPI.buscarHistoricoEncaminhamento', () => {
-            expect(projetoHelperAPI.buscarHistoricoEncaminhamento).toHaveBeenCalled();
+        test('it calls outrasInformacoesHelperAPI.buscarHistoricoEncaminhamento', () => {
+            expect(outrasInformacoesHelperAPI.buscarHistoricoEncaminhamento).toHaveBeenCalled();
         });
 
         test('it is commit to buscarHistoricoEncaminhamento', (done) => {
@@ -574,13 +307,13 @@ describe('Projeto actions', () => {
             axios.get.mockResolvedValue(mockReponse);
 
             commit = jest.fn();
-            jest.spyOn(projetoHelperAPI, 'buscarTramitacaoDocumento');
+            jest.spyOn(outrasInformacoesHelperAPI, 'buscarTramitacaoDocumento');
             const idPronac = 216941;
             actions.buscarTramitacaoDocumento({ commit }, idPronac);
         });
 
-        test('it calls projetoHelperAPI.buscarTramitacaoDocumento', () => {
-            expect(projetoHelperAPI.buscarTramitacaoDocumento).toHaveBeenCalled();
+        test('it calls outrasInformacoesHelperAPI.buscarTramitacaoDocumento', () => {
+            expect(outrasInformacoesHelperAPI.buscarTramitacaoDocumento).toHaveBeenCalled();
         });
 
         test('it is commit to buscarTramitacaoDocumento', (done) => {
@@ -607,13 +340,13 @@ describe('Projeto actions', () => {
             axios.get.mockResolvedValue(mockReponse);
 
             commit = jest.fn();
-            jest.spyOn(projetoHelperAPI, 'buscarTramitacaoProjeto');
+            jest.spyOn(outrasInformacoesHelperAPI, 'buscarTramitacaoProjeto');
             const idPronac = 216941;
             actions.buscarTramitacaoProjeto({ commit }, idPronac);
         });
 
-        test('it calls projetoHelperAPI.buscarTramitacaoProjeto', () => {
-            expect(projetoHelperAPI.buscarTramitacaoProjeto).toHaveBeenCalled();
+        test('it calls outrasInformacoesHelperAPI.buscarTramitacaoProjeto', () => {
+            expect(outrasInformacoesHelperAPI.buscarTramitacaoProjeto).toHaveBeenCalled();
         });
 
         test('it is commit to buscarTramitacaoProjeto', (done) => {
@@ -640,13 +373,13 @@ describe('Projeto actions', () => {
             axios.get.mockResolvedValue(mockReponse);
 
             commit = jest.fn();
-            jest.spyOn(projetoHelperAPI, 'buscarUltimaTramitacao');
+            jest.spyOn(outrasInformacoesHelperAPI, 'buscarUltimaTramitacao');
             const idPronac = 216941;
             actions.buscarUltimaTramitacao({ commit }, idPronac);
         });
 
-        test('it calls projetoHelperAPI.buscarUltimaTramitacao', () => {
-            expect(projetoHelperAPI.buscarUltimaTramitacao).toHaveBeenCalled();
+        test('it calls outrasInformacoesHelperAPI.buscarUltimaTramitacao', () => {
+            expect(outrasInformacoesHelperAPI.buscarUltimaTramitacao).toHaveBeenCalled();
         });
 
         test('it is commit to buscarUltimaTramitacao', (done) => {
@@ -675,13 +408,13 @@ describe('Projeto actions', () => {
             axios.get.mockResolvedValue(mockReponse);
 
             commit = jest.fn();
-            jest.spyOn(projetoHelperAPI, 'buscarPlanoDistribuicaoIn2017');
+            jest.spyOn(outrasInformacoesHelperAPI, 'buscarPlanoDistribuicaoIn2017');
             const idPronac = 216941;
             actions.buscarPlanoDistribuicaoIn2017({ commit }, idPronac);
         });
 
-        test('it calls projetoHelperAPI.buscarPlanoDistribuicaoIn2017', () => {
-            expect(projetoHelperAPI.buscarPlanoDistribuicaoIn2017).toHaveBeenCalled();
+        test('it calls outrasInformacoesHelperAPI.buscarPlanoDistribuicaoIn2017', () => {
+            expect(outrasInformacoesHelperAPI.buscarPlanoDistribuicaoIn2017).toHaveBeenCalled();
         });
 
         test('it is commit to buscarPlanoDistribuicaoIn2017', (done) => {
@@ -707,7 +440,7 @@ describe('Projeto actions', () => {
             axios.get.mockResolvedValue(mockReponse);
 
             commit = jest.fn();
-            jest.spyOn(projetoHelperAPI, 'buscarDiligenciaProposta');
+            jest.spyOn(outrasInformacoesHelperAPI, 'buscarDiligenciaProposta');
             const idPreProjeto = 245047;
             const idAvaliacaoProposta = 407842;
             const value = { idPreProjeto, idAvaliacaoProposta };
@@ -715,8 +448,8 @@ describe('Projeto actions', () => {
             actions.buscarDiligenciaProposta({ commit }, value);
         });
 
-        test('it calls projetoHelperAPI.buscarDiligenciaProposta', () => {
-            expect(projetoHelperAPI.buscarDiligenciaProposta).toHaveBeenCalled();
+        test('it calls outrasInformacoesHelperAPI.buscarDiligenciaProposta', () => {
+            expect(outrasInformacoesHelperAPI.buscarDiligenciaProposta).toHaveBeenCalled();
         });
 
         test('it is commit to buscarDiligenciaProposta', (done) => {
@@ -742,15 +475,15 @@ describe('Projeto actions', () => {
             axios.get.mockResolvedValue(mockReponse);
 
             commit = jest.fn();
-            jest.spyOn(projetoHelperAPI, 'buscarDiligenciaAdequacao');
+            jest.spyOn(outrasInformacoesHelperAPI, 'buscarDiligenciaAdequacao');
             const idPronac = 209561;
             const idAvaliarAdequacaoProjeto = 1452;
             const value = { idPronac, idAvaliarAdequacaoProjeto };
             actions.buscarDiligenciaAdequacao({ commit }, value);
         });
 
-        test('it calls projetoHelperAPI.buscarDiligenciaAdequacao', () => {
-            expect(projetoHelperAPI.buscarDiligenciaAdequacao).toHaveBeenCalled();
+        test('it calls outrasInformacoesHelperAPI.buscarDiligenciaAdequacao', () => {
+            expect(outrasInformacoesHelperAPI.buscarDiligenciaAdequacao).toHaveBeenCalled();
         });
 
         test('it is commit to buscarDiligenciaAdequacao', (done) => {
@@ -778,15 +511,15 @@ describe('Projeto actions', () => {
             axios.get.mockResolvedValue(mockReponse);
 
             commit = jest.fn();
-            jest.spyOn(projetoHelperAPI, 'buscarDiligenciaProjeto');
+            jest.spyOn(outrasInformacoesHelperAPI, 'buscarDiligenciaProjeto');
             const idPronac = 209561;
             const idDiligencia = 72427;
             const value = { idPronac, idDiligencia };
             actions.buscarDiligenciaProjeto({ commit }, value);
         });
 
-        test('it calls projetoHelperAPI.buscarDiligenciaProjeto', () => {
-            expect(projetoHelperAPI.buscarDiligenciaProjeto).toHaveBeenCalled();
+        test('it calls outrasInformacoesHelperAPI.buscarDiligenciaProjeto', () => {
+            expect(outrasInformacoesHelperAPI.buscarDiligenciaProjeto).toHaveBeenCalled();
         });
 
         test('it is commit to buscarDiligenciaProjeto', (done) => {
@@ -803,11 +536,11 @@ describe('Projeto actions', () => {
                     data: {
                         items: {
                             diligenciaAdequacao: {
-                                tipoDiligencia: 'Diligência na Análise da adequação à realidade do projeto.',
+                                tipoDiligencia: 'Dilig&ecirc;ncia na An&aacute;lise da adequa&ccedil;&atilde;o &agrave; realidade do projeto.',
                                 idAvaliarAdequacaoProjeto: 1452,
                             },
                             diligenciaProjeto: {
-                                tipoDiligencia: 'Diligência de Checklist - Análise',
+                                tipoDiligencia: 'Dilig&ecirc;ncia de Checklist - An&aacute;lise',
                                 idDiligencia: 72427,
                             },
                             diligenciaProposta: {
@@ -822,13 +555,13 @@ describe('Projeto actions', () => {
             axios.get.mockResolvedValue(mockReponse);
 
             commit = jest.fn();
-            jest.spyOn(projetoHelperAPI, 'buscarDiligencia');
+            jest.spyOn(outrasInformacoesHelperAPI, 'buscarDiligencia');
             const idPronac = 216941;
             actions.buscarDiligencia({ commit }, idPronac);
         });
 
-        test('it calls projetoHelperAPI.buscarDiligencia', () => {
-            expect(projetoHelperAPI.buscarDiligencia).toHaveBeenCalled();
+        test('it calls outrasInformacoesHelperAPI.buscarDiligencia', () => {
+            expect(outrasInformacoesHelperAPI.buscarDiligencia).toHaveBeenCalled();
         });
 
         test('it is commit to buscarDiligencia', (done) => {
