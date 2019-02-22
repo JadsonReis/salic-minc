@@ -19,7 +19,7 @@ pipeline {
           sh "git config --global credential.helper store"
           sh "jx step git credentials"
           sh "echo \$(jx-release-version) > VERSION"
-
+          sh "jx step tag --version \$(cat VERSION)"
           echo "teste"
           sh "CI=true DISPLAY=:99"
           sh "export VERSION=`cat VERSION` && skaffold build -f skaffold.yaml"
@@ -36,8 +36,6 @@ pipeline {
           dir('./charts/salic-minc') {
             //sh "jx step changelog --version v\$(cat ../../VERSION)"
             
-            // generate tag helm chart
-            sh "make tag"
                            
             // release the helm chart
             sh "jx step helm release"
