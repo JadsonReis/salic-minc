@@ -3,8 +3,8 @@
 # Declare variables to be passed into your templates.
 replicaCount: 3
 image:
-  repository: draft
-  tag: dev
+  repository: docker-registry.default.svc:5000/culturagovbr/salic-minc
+  tag: 6.6.4
   pullPolicy: IfNotPresent
 service:
   name: salic-minc
